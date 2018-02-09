@@ -16,13 +16,16 @@ import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 import Test from './test';
+import HomeIcon from 'material-ui-icons/Home';
+import IconThing from 'material-ui/Icon';
+
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     width: '100%',
-    height: 430,
+    height: '100%',
     zIndex: 1,
     overflow: 'hidden',
   },
@@ -33,8 +36,15 @@ const styles = theme => ({
     height: '100%',
   },
   list: {
-	  color:'white',
-	  padding: '20px'
+	  color:theme.palette.primary.contrastText,
+	  padding: '20px',
+	  display:'flex',
+	  alignItems:'center'
+
+  },
+  list1: {
+	backgroundColor:theme.palette.secondary.main,
+	padding: '20px'
   },
   appBar: {
     position: 'absolute',
@@ -73,6 +83,7 @@ const styles = theme => ({
 	top: '0px',
     left: '0',
     bottom: '0',
+	border: 'none'
   },
   drawerHeader: {
     display: 'flex',
@@ -84,16 +95,15 @@ const styles = theme => ({
   content: {
     width: '100%',
     flexGrow: 1,
-    backgroundColor: 'white',
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    height: 'calc(100% - 56px)',
+    height: '100%',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px)',
+      height: '100%',
       marginTop: 64,
     },
   },
@@ -157,21 +167,20 @@ class PersistentDrawer extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List className={classes.list}>mailFolderListItems</List>
+          <List className={classes.list}><IconThing>home</IconThing><span>Home</span></List>
           <Divider />
-          <List className={classes.list}>otherMailFolderListItems</List>
+          <List className={classes.list+ ' ' + classes.list1}><IconThing>home</IconThing>Contacts</List>
+		  <List className={classes.list}>Account</List>
+		  <Divider />
+		  <List className={classes.list}><IconThing>map</IconThing>Maps</List>
+		  <Divider />
+		  <List className={classes.list}>Dashboard</List>
+		  <Divider />
+		  <List className={classes.list}>Settings</List>
+		  <Divider />
         </div>
       </Drawer>
     );
-
-    let before = null;
-    let after = null;
-
-    if (anchor === 'left') {
-      before = drawer;
-    } else {
-      after = drawer;
-    }
 
     return (
 		<div className={classes.root}>
@@ -193,7 +202,7 @@ class PersistentDrawer extends React.Component {
               </IconButton>
             </Toolbar>
           </AppBar>
-          {before}
+
           <main
             className={classNames(classes.content, classes[`content-${anchor}`], {
               [classes.contentShift]: open,
@@ -202,7 +211,7 @@ class PersistentDrawer extends React.Component {
           >
             <Test />
           </main>
-          {after}
+          {drawer}
         </div>
       </div>
     );

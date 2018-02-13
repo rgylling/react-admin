@@ -127,6 +127,8 @@ const styles = theme => ({
   },
 });
 
+
+
 class PersistentDrawer extends React.Component {
   state = {
     open: true,
@@ -182,6 +184,7 @@ class PersistentDrawer extends React.Component {
       </Drawer>
     );
 
+
     return (
 		<div className={classes.root}>
           <div className={classes.appFrame}>
@@ -209,7 +212,7 @@ class PersistentDrawer extends React.Component {
               [classes[`contentShift-${anchor}`]]: open,
             })}
           >
-            <Test />
+		  <Test />
           </main>
           {drawer}
         </div>

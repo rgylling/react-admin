@@ -52,9 +52,9 @@ const SimpleCard = (props) => {
 		 	</Grid>)
 	  }
 
-	  const testComp = [...Array(10)].map(() => {
+	  const testComp = [...Array(10)].map((a,b) => {
 		return	(
-			<Grid item xs={12} lg={3}>
+			<Grid key={b} item xs={12} lg={3}>
 				<Card className={classes.card}>
 					<CardContent>
 					<Typography className={classes.title}>Word of the Day</Typography>

@@ -5,6 +5,15 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import Reboot from 'material-ui/Reboot';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import Test from './components/test';
+import Content from './components/content';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers/navbar';
+const middlewares = [thunk];
 
 const theme = createMuiTheme({
 	fontFamily: 'Roboto, sans-serif',
@@ -24,10 +33,26 @@ const theme = createMuiTheme({
   },
 });
 
+const store = createStore(
+	reducers,
+	window.devToolsExtension && window.devToolsExtension(),
+	applyMiddleware(...middlewares),
+);
+
+
 ReactDOM.render(
 	<MuiThemeProvider theme={theme}>
 		<Reboot />
-      <App />
+			<Provider store={store}>
+		<Router>
+			<div>
+			<Route path="/" component={App} />
+			<Content>
+				<Route path="/test" component={Test} />
+			</Content>
+			</div>
+		</Router>
+	</Provider>
     </MuiThemeProvider>,
 
 

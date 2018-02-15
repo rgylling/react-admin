@@ -8,8 +8,9 @@ import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import IconThing from 'material-ui/Icon';
-import {Link, Switch} from 'react-router-dom';
+import {Link, Switch, NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
+import { navigation } from '../constants/navigation'
 
 const drawerWidth = 240;
 
@@ -127,6 +128,23 @@ class PersistentDrawer extends React.Component {
 	}
 	render() {
 	const { classes, theme } = this.props;
+	const navLength = navigation.sideMenu.length - 1
+	const nav = navigation.sideMenu.map((link,linkKey)=>{
+		return (
+			<span key={linkKey}>
+				<Divider />
+				<List>
+					<Switch>
+						<NavLink activeClassName={classes.list1} className={classes.list} to={link.linkTo}>
+							<IconThing>{link.iconName}</IconThing>
+							 {link.name}
+						</NavLink>
+					</Switch>
+				</List>
+				{ navLength === linkKey ? <Divider /> : null}
+			</span>
+		)
+	})
 
 	const drawer = (
 		<Drawer
@@ -143,24 +161,10 @@ class PersistentDrawer extends React.Component {
 						<MenuIcon style={{color: 'white'}} />
 					</IconButton>
 				</div>
-				<Divider />
-				<List><Switch><Link className={classes.list} to="/"><IconThing>home</IconThing> Home</Link></Switch></List>
-				<Divider />
-				<List className={classes.list+ ' ' + classes.list1}><IconThing>home</IconThing>Contacts</List>
-				<List className={classes.list}>Account</List>
-				<Divider />
-				<List className={classes.list}><IconThing>map</IconThing>Maps</List>
-				<Divider />
-				<List className={classes.list}>Dashboard</List>
-				<Divider />
-				<List className={classes.list}>Settings</List>
-				<Divider />
-				<List><Switch><Link className={classes.list} to="/test">Test</Link></Switch></List>
-				<Divider />
+				{nav}
 			</div>
 		</Drawer>
 	);
-
 
 	return (
 		<div>

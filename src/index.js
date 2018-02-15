@@ -56,7 +56,7 @@ ReactDOM.render(
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
 				<div>
-					<Route  path="/" component={App} />
+					<App />
 					<Content>
 						<Route path="/test" component={Test} />
 					</Content>

@@ -3,8 +3,6 @@ import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
-
-
 const drawerWidth = 240;
 const styles = theme => ({
 
@@ -27,6 +25,10 @@ const styles = theme => ({
 	},
 	'contentWidth': {
 		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 	'content-right': {
 		marginRight: -drawerWidth,
@@ -47,16 +49,18 @@ const styles = theme => ({
 
 
 class Content extends React.Component {
-
+	constructor(props){
+		super(props)
+	}
 	render() {
 		const { classes, theme } = this.props;
 		return (
 
 			<main
-				className={classNames(classes.content, classes[`content-${this.props.open}`], {
-					[classes.contentShift]: this.props.open,
-					[classes[`contentShift-${'left'}`]]: this.props.open,
-					[classes.contentWidth]: this.props.open,
+				className={classNames(classes.content, classes[`content-${this.props.open.open}`], {
+					[classes.contentShift]: this.props.open.open,
+					[classes[`contentShift-${'left'}`]]: this.props.open.open,
+					[classes.contentWidth]: this.props.open.open,
 				})}
 				>
 				{this.props.children}

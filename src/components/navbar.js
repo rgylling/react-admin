@@ -8,6 +8,8 @@ import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import IconThing from 'material-ui/Icon';
+import {Link, Switch} from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -28,7 +30,8 @@ const styles = theme => ({
 		color:theme.palette.primary.contrastText,
 		padding: '20px',
 		display:'flex',
-		alignItems:'center'
+		alignItems:'center',
+		textDecoration: 'none'
 
 	},
 	list1: {
@@ -118,9 +121,12 @@ const styles = theme => ({
 
 
 
-const PersistentDrawer = (props) => {
-
-	const { classes, theme } = props;
+class PersistentDrawer extends React.Component {
+	constructor(props){
+		super(props)
+	}
+	render() {
+	const { classes, theme } = this.props;
 
 	const drawer = (
 		<Drawer
@@ -129,16 +135,16 @@ const PersistentDrawer = (props) => {
 				paper: classes.drawerPaper,
 			}}
 			anchor='left'
-			open={props.open}
+			open={this.props.open.open}
 			>
 			<div className={classes.drawerInner}>
 				<div className={classes.drawerHeader}>
-					<IconButton onClick={() => props.toggleChange(!props.open)}>
+					<IconButton onClick={() => this.props.toggleChange(!this.props.open.open)}>
 						<MenuIcon style={{color: 'white'}} />
 					</IconButton>
 				</div>
 				<Divider />
-				<List className={classes.list}><IconThing>home</IconThing><span>Home</span></List>
+				<List><Switch><Link className={classes.list} to="/"><IconThing>home</IconThing> Home</Link></Switch></List>
 				<Divider />
 				<List className={classes.list+ ' ' + classes.list1}><IconThing>home</IconThing>Contacts</List>
 				<List className={classes.list}>Account</List>
@@ -148,6 +154,8 @@ const PersistentDrawer = (props) => {
 				<List className={classes.list}>Dashboard</List>
 				<Divider />
 				<List className={classes.list}>Settings</List>
+				<Divider />
+				<List><Switch><Link className={classes.list} to="/test">Test</Link></Switch></List>
 				<Divider />
 			</div>
 		</Drawer>
@@ -162,7 +170,7 @@ const PersistentDrawer = (props) => {
 						<IconButton
 							color="inherit"
 							aria-label="open drawer"
-							onClick={() => props.toggleChange(!props.open)}
+							onClick={() => this.props.toggleChange(!this.props.open.open)}
 							className={classes.menuButton}
 							>
 							<MenuIcon />
@@ -173,7 +181,11 @@ const PersistentDrawer = (props) => {
 			</div>
 		</div>
 	);
-
+}
 }
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawer);
+const mapStateToProps = state => {
+	return state
+};
+
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps)(PersistentDrawer));
